@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>AI Essay Grader</title>
+
+    <style>
+
+      @font-face {
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap)
+      }
+
+      body{
+        font-family: EB Garamond;
+        background-image: url('back.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        padding-left: 60px;
+      }
+
+      h1{
+        font-size: 50px;
+        font-family: EB Garamond;
+        color: rgb(50, 50, 50);
+      }
+
+      textarea{
+        padding: 20px;
+        background-color: transparent;
+        color: rgb(50, 50, 50);
+        border-radius: 30px;
+        display: block;
+        outline: none;
+        margin-right: 50px;
+      }
+
+
+      h3{
+        font-family: EB Garamond;  
+        color: rgb(50, 50, 50);
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <br><br>
+    <h1><p style="text-align:center">GRE Essay Grader</p></h1>
+    <br>
+    <div class="input-group">
+        <textarea id="main" placeholder="Enter GRE Essay Here" rows="11" cols="180"></textarea>
+    </div>
+    <br>
+
+    <br>
+    <button type="button" class="btn btn-outline-dark" onclick="senddata()">Score my Essay!</button>
+    <br>
+    <br>
+    
+    <h3 id="output">
+
+    </h3>
+    <script>
+        function senddata(){
+            var text = document.getElementById("main")
+            var output = document.getElementById("output")
+            const obj = {
+                text: text.value
+            }
+            const str = JSON.stringify(obj)
+            fetch("http://127.0.0.1:5000/", {
+                method: 'POST',
+                body: JSON.stringify(obj),
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.score == null)
+                  output.innerHTML = "Your grade is: 0/6";
+                else
+                  output.innerHTML = "Your grade is: " + result.score + "/6"
+                console.log('Success:', result);
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+  </body>
+</html>
