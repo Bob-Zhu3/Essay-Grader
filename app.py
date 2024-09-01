@@ -105,15 +105,3 @@ def create_task():
 
 if __name__ == '__main__':
     app.run(debug = True)
-
-"""
-This should at least output something!!
-if(!result){
-    output.innerHTML = "Your grade is: 0/10";
-}
-else{
-    output.innerHTML = "Your grade is: "+result.score+"/10"
-}
-"""
-
-# if essays is < =  100 or > 1000 then say "Please enter a valid GRE essay between 100-1000."
